@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import axios from "axios";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { searchUser } from "./actions/usersActions";
+
 import './App.css';
 
 class App extends Component {
@@ -22,22 +25,7 @@ class App extends Component {
   onFormSubmit(e) {
     e.preventDefault();
 
-    let response = 
-                axios.get("https://api.github.com/users/"+this.state.name)
-                      .then((response) => {
-                        this.setState({
-                          data: response.data,
-                          error: false
-                        })
-                      })
-                      .catch((error) => {
-                        this.setState({
-                          data: "",
-                          error: true
-                        })
-                      });
-
-    console.log(response);
+    this.props.searchUser(this.state.name);
 
     this.setState({
       name: ""
@@ -53,26 +41,46 @@ class App extends Component {
             <label>
               Digite
             </label>
-            <input placeholder="Digite o nome do usuário" name="name" value={this.state.name} onChange={this.onChangeInput.bind(this)} />
+            <input placeholder="Type the github user name" name="name" value={this.state.name} onChange={this.onChangeInput.bind(this)} />
             <button type="submit">Procurar</button>
           </form>
         </div> 
-        <p className="App-intro">
-          {this.state.data !== "" ? 
-            <div>
-              <img src={this.state.data.avatar_url} width="80" role="presentation" />
-              <p>id: {this.state.data.id}</p>
-              <p>Name: {this.state.data.name}</p>
-              <p>Type: {this.state.data.type}</p>
-              <p>login: {this.state.data.login}</p>
-              <p>Repos: {this.state.data.public_repos}</p>
-            </div> : ""}
 
-        {this.state.error ? <div>User not found</div> : ""}
+        {this.props.users.error ? <div id="error">User not found</div> : ""}<br/>
+
+        <p className="App-intro">
+          {this.props.users ? 
+            this.props.users.data.map((user, i) => {
+              return (
+                <div key={i} className="App-card">
+                  <a href={user.html_url} target="_blank" >
+                    <img src={user.avatar_url} width="80" role="presentation" />
+                  </a>
+                  <p>id: {user.id}</p>
+                  <p>Name: {user.name}</p>
+                  <p>Type: {user.type}</p>
+                  <p>login: {user.login}</p>
+                  <p>Repos: {user.public_repos}</p>
+                </div>
+              )
+            })
+            : ""}
+
+        
         </p>
       </div>
     );
   }
 }
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    users: state.users
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ searchUser }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

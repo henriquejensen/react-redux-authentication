@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { searchUser } from "./actions/usersActions";
+import { searchUser } from "../actions/usersActions";
 
 import './App.css';
 

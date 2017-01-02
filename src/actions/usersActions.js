@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { GITHUB_URL, SEARCH_USER, SEARCH_ERROR } from "../constants/utils";
+import { GITHUB_URL, SEARCH_USER, SEARCH_ERROR, LOGIN_SUCCESS } from "../constants/utils";
 
 export function searchUser(name) {
     return (dispatch) => {
@@ -15,4 +15,11 @@ export function searchUser(name) {
                     dispatch({type: SEARCH_ERROR})
                 });
     }
-} 
+}
+
+export function login(name) {
+    return {
+        type: LOGIN_SUCCESS,
+        payload: "user"
+    }
+}

@@ -19,8 +19,11 @@ export function searchUser(name) {
 
 export function login(name) {
     sessionStorage.setItem("token", 1234);
-    return {
-        type: LOGIN_SUCCESS,
+    return (dispatch) => {
+        axios.post("http://localhost:8000/");
+        return {
+            type: LOGIN_SUCCESS
+        }
     }
 }
 

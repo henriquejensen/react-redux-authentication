@@ -1,7 +1,7 @@
 import { browserHistory } from 'react-router'
 import { LOGIN_SUCCESS, LOG_OUT } from "../constants/utils";
 
-export default function(state=sessionStorage.token, action) {
+export default function(state=false, action) {
     switch(action.type) {
         case LOGIN_SUCCESS:
             browserHistory.push("/dashboard")

@@ -13,7 +13,7 @@ export default (
 )
 
 function requireAuth(nextState, replace) {  
-  if (!sessionStorage.jwt) {
+  if (!sessionStorage.token) {
     replace({
       pathname: '/',
       state: { nextPathname: nextState.location.pathname }

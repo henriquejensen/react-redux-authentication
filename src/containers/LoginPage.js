@@ -15,9 +15,7 @@ class LoginPage extends Component {
 
     onFormSubmit(evt) {
         evt.preventDefault();
-
-        console.log(this.props)
-
+        
         this.props.login(this.state.user);
     }
 

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { GITHUB_URL, SEARCH_USER, SEARCH_ERROR, LOGIN_SUCCESS } from "../constants/utils";
+import { GITHUB_URL, SEARCH_USER, SEARCH_ERROR, LOGIN_SUCCESS, LOG_OUT } from "../constants/utils";
 
 export function searchUser(name) {
     return (dispatch) => {
@@ -18,8 +18,16 @@ export function searchUser(name) {
 }
 
 export function login(name) {
+    sessionStorage.setItem("token", 1234);
     return {
         type: LOGIN_SUCCESS,
-        payload: "user"
+    }
+}
+
+export function logOut() {
+    console.log("log out")
+    sessionStorage.removeItem("token");
+    return {
+        type: LOG_OUT,
     }
 }
